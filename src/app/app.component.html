@@ -1,0 +1,151 @@
+<div>
+  <div style="height:100vh;">
+    <div class="">
+      <div class="shadow w-20 p-5 position-absolute top-50 start-50 translate-middle">
+        <form #registerForm="ngForm" (ngSubmit)="register(registerForm)">
+          <h4 class="display-6 text-center py-2">Certificate Database</h4>
+          
+          <div class="">
+            <label for="certificateName">Certificate Name</label>
+            <div class="">
+              <input id="certificateName" required #certificateName="ngModel" ngModel name="certificateName" type="text"
+                class="form-control" placeholder="Enter certificate name">
+              <div *ngIf="certificateName.invalid && certificateName.touched">
+                <small class="text-danger" *ngIf="certificateName.errors?.['required']">Required</small>
+              </div>
+            </div>
+          </div><br>
+          
+          <div class="">
+            <label for="issuedBy">Issued By</label>
+            <div class="">
+              <input id="issuedBy" required #issuedBy="ngModel" ngModel name="issuedBy" type="text"
+                class="form-control" placeholder="Enter issuing authority">
+              <div *ngIf="issuedBy.invalid && issuedBy.touched">
+                <small class="text-danger" *ngIf="issuedBy.errors?.['required']">Required</small>
+              </div>
+            </div>
+          </div><br>
+          
+          <div class="">
+            <label for="issueDate">Issue Date</label>
+            <div class="">
+              <input id="issueDate" required #issueDate="ngModel" ngModel name="issueDate" type="date"
+                class="form-control">
+              <div *ngIf="issueDate.invalid && issueDate.touched">
+                <small class="text-danger" *ngIf="issueDate.errors?.['required']">Required</small>
+              </div>
+            </div>
+          </div><br>
+
+          <div class="">
+            <label for="expiryDate">Expiry Date</label>
+            <div class="">
+              <input id="expiryDate" required #expiryDate="ngModel" ngModel name="expiryDate" type="date"
+                class="form-control">
+              <div *ngIf="expiryDate.invalid && expiryDate.touched">
+                <small class="text-danger" *ngIf="expiryDate.errors?.['required']">Required</small>
+              </div>
+            </div>
+          </div><br>
+  
+          <div class="form-group text-center">
+            <input class="btn btn-primary" type="submit" value="Submit">
+          </div>
+        </form>
+      </div>
+    </div>
+  </div><br>
+
+  <div class="mt-5">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Certificate Name</th>
+          <th>Issued By</th>
+          <th>Issue Date</th>
+          <th>Expiry Date</th>
+          <th>Edit</th>
+          <th>Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let certificate of certificateDetails">
+          <td>{{certificate.id}}</td>
+          <td>{{certificate.certificateName}}</td>
+          <td>{{certificate.issuedBy}}</td>
+          <td>{{certificate.issueDate}}</td>
+          <td>{{certificate.expiryDate}}</td>
+          <td><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="edit(certificate)">Edit</button></td>
+          <td><button type="button" class="btn btn-danger" (click)="deleteCertificate(certificate)">Delete</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Update Certificate</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form #updateForm="ngForm" (ngSubmit)="updateCertificate()">
+            <h4 class="display-6 text-center py-2">Update Certificate</h4>
+            
+            <div class="">
+              <label for="certificateName">Certificate Name</label>
+              <div class="">
+                <input id="certificateName" required #certificateName="ngModel" [(ngModel)]="certificateToUpdate.certificateName" name="certificateName" type="text"
+                  class="form-control" placeholder="Enter certificate name">
+                <div *ngIf="certificateName.invalid && certificateName.touched">
+                  <small class="text-danger" *ngIf="certificateName.errors?.['required']">Required</small>
+                </div>
+              </div>
+            </div><br>
+            
+            <div class="">
+              <label for="issuedBy">Issued By</label>
+              <div class="">
+                <input id="issuedBy" required #issuedBy="ngModel" [(ngModel)]="certificateToUpdate.issuedBy" name="issuedBy" type="text"
+                  class="form-control" placeholder="Enter issuing authority">
+                <div *ngIf="issuedBy.invalid && issuedBy.touched">
+                  <small class="text-danger" *ngIf="issuedBy.errors?.['required']">Required</small>
+                </div>
+              </div>
+            </div><br>
+            
+            <div class="">
+              <label for="issueDate">Issue Date</label>
+              <div class="">
+                <input id="issueDate" required #issueDate="ngModel" [(ngModel)]="certificateToUpdate.issueDate" name="issueDate" type="date"
+                  class="form-control">
+                <div *ngIf="issueDate.invalid && issueDate.touched">
+                  <small class="text-danger" *ngIf="issueDate.errors?.['required']">Required</small>
+                </div>
+              </div>
+            </div><br>
+  
+            <div class="">
+              <label for="expiryDate">Expiry Date</label>
+              <div class="">
+                <input id="expiryDate" required #expiryDate="ngModel" [(ngModel)]="certificateToUpdate.expiryDate" name="expiryDate" type="date"
+                  class="form-control">
+                <div *ngIf="expiryDate.invalid && expiryDate.touched">
+                  <small class="text-danger" *ngIf="expiryDate.errors?.['required']">Required</small>
+                </div>
+              </div>
+            </div><br>
+       
+            <div class="form-group text-center">
+              <input class="btn btn-primary" type="submit" value="Update">
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
